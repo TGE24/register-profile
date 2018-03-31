@@ -1,6 +1,6 @@
  <?php
 include '../init.php';
-$sql = "SELECT * FROM `year_four` WHERE `semester`='1'";
+$sql = "SELECT * FROM `final_year` WHERE `semester`='1'";
 $results = $link->query($sql);
 ?>
 
@@ -92,7 +92,16 @@ if(loggedin() ) {
 
                     <!-- menu prile quick info -->
                     <div class="profile">
-                        </div>
+        <div class="profile_pic">
+                
+ <?php
+$url = getuserfield('url');
+echo '<div class="profile_pic">';
+
+//echo '<div class="img-circle profile_img">';
+echo "<img src='upload/$url' alt='...' class='img-circle profile_img'/></div>    ";
+//$imageURL = 'upload/'.$pics['url'];
+?>                        </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
                             <?php echo getuserfield('name');?>
@@ -187,41 +196,7 @@ if(loggedin() ) {
                             </ul>
                         </div>
                         <div class="menu_section">
-                          <!--  <h3>Live On</h3>
-                            <ul class="nav side-menu">
-                                <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu" style="display: none">
-                                        <li><a href="e_commerce.html">E-commerce</a>
-                                        </li>
-                                        <li><a href="projects.html">Projects</a>
-                                        </li>
-                                        <li><a href="project_detail.html">Project Detail</a>
-                                        </li>
-                                        <li><a href="contacts.html">Contacts</a>
-                                        </li>
-                                        <li><a href="profile.html">Profile</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <!--<li><a><i class="fa fa-windows"></i> Extras <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu" style="display: none">
-                                        <li><a href="page_404.html">404 Error</a>
-                                        </li>
-                                        <li><a href="page_500.html">500 Error</a>
-                                        </li>
-                                        <li><a href="plain_page.html">Plain Page</a>
-                                        </li>
-                                        <li><a href="login.html">Login Page</a>
-                                        </li>
-                                        <li><a href="pricing_tables.html">Pricing Tables</a>
-                                        </li> -->
-
-                                  <!--  </ul>
-                                </li>
-                                <li><a><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a>
-                                </li>
-                            </ul>-->
-                        </div>
+                         </div>
 
                     </div>
                     <!-- /sidebar menu -->
@@ -254,7 +229,7 @@ if(loggedin() ) {
                             <a id="menu_toggle"><i class="fa fa-bars"></i></a>
                         </div>
 
-                                                <ul class="nav navbar-nav navbar-right">
+                        <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                     <img src="images/img.jpg" alt=""><?php echo getuserfield('name');?>
@@ -299,83 +274,54 @@ if(loggedin() ) {
                     </div>
 
                     
-                        <div class="clearfix"></div>
+<!-- /Register Course -->                    
+          <div class="x_panel">
+            <label class="col-md-5 control-label" for="name"><h2>Course Title</h2></label>
+            <label class="col-md-2 control-label" for="name"><h2>Course Code</h2></label>
+            <label class="col-md-2 control-label" for="name"><h2>Credit Hours</h2></label>
+            <label class="col-md-3 control-label" for="name"><h2>Tick All That Applies</h2></label>
+           <div class="x_content">
 
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            <div class="x_panel">
-                                <div class="x_content">
+      <form class="form-horizontal" action="" method="post">
 
-                                   <!-- <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p>-->
-                                   <form action="y4_1stsemester.php" method="POST">
+         <?php
+            $totalcr = 0;
 
-                                    <table class="table table-striped responsive-utilities jambo_table bulk_action">
-                                        <thead>
-                                            <tr class="headings">
-                                                <th>
-                                                <input type="checkbox" id="check-all" class="flat" name="table_all">
-                                                </th>
-                                                <th class="column-title">Course Title</th>
-                                                <th class="column-title">Course Code</th>
-                                                <th class="column-title">Credit Hrs</th>
-                                                <!--<th class="column-title">Email</th>-->
-                                                <!--<th class="column-title no-link last"><span class="nobr">Action</span>
-                                                </th>-->
-                                                <th class="bulk-actions" colspan="7">
-                                                    <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-                                            </th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr class="even pointer">
-                                            <?php
-                                            $regnum = getuserfield('regnum');
-                                            while($userInfo = mysqli_fetch_assoc($results)):
-                                                $coursetitle = $userInfo['couse title'];
-                                                $courseCode = $userInfo['course code'];
-                                                $crhrs = $userInfo['cr hrs'];
-                                                //$id = $userInfo['id'];
-                                                //$course = $userInfo['Year1'];
-                                                if (isset($_POST['submit'])) {
-                                                    if(isset($_POST['table_records']) OR isset($_POST['table_all'])) {
+    while($userInfo = mysqli_fetch_array($results)):
+         ?>
+            <div class="form-group">
+            <label class="col-md-5" for="name"><?php echo $userInfo['course title'];?></label>
+            <label class="col-md-3" for="name"><?php echo $userInfo['course code'];?></label>
+            <label class="col-md-1" for="name"><?php $array=array($userInfo['cr hrs']);echo $userInfo['cr hrs'];?></label>      
+            <div class="col-md-3  ">                               
+            <?php $totalcr = $totalcr + $userInfo['cr hrs'];?>           
+        <input id="phone" name="choice[]" value="<?php echo $userInfo['course code'];?>" type="checkbox" placeholder="" class="form-control">
+             </div> 
+               </div> 
+               <?php endwhile ;?>
+                 <button type="submit" class="btn btn-success" name="submit">Register</button>
+                 <?php
+         $regnum = getuserfield('regnum');
+          if (isset($_POST['submit'])) {
+             if(!empty($_POST['choice'])) {
+               foreach ($_POST['choice'] as $userInfo['course code'] ) {
+                   $courseCode = $userInfo['course code'];
+              $query = "INSERT INTO `coursesregistered` (`regnum` ,`courseCode`) VALUES ('$regnum', '$courseCode')";
 
-                                                $query = "INSERT INTO `coursesregistered` (`regnum` ,`courseCode`) VALUES ('$regnum', '$courseCode')";
+               $result = mysqli_query($link, $query);
+                 if (!$result) {
+                   echo 'Query Failed ';
+                        }
+                  }
+               }
+            }
 
-                                                $result = mysqli_query($link, $query);
-                                                if (!$result) {
-                                                echo 'Query Failed ';
-                                                }
-                                                if (mysqli_affected_rows($link) == 1) {
-                                                echo '<div class="success">Thank you for registering!</div>';
-                                                }
-                                                    }
+    if (mysqli_affected_rows($link) == 1) {
+        echo '<div class="success">Thank you for registering!</div>';
+        }
 
-                                                }
-                                            ?>
-                                            <tr>
-                                              <td class="a-center ">
-                                                <input type="checkbox" class="flat" name="table_records">
-                                               </td>
-                                              <td><?php echo $coursetitle;?></td>
-                                              <td><?php echo $courseCode;?></td>
-                                              <td><?php echo $crhrs;?></td>
-                                              <!--<td></td>
-                                              <td><?php //echo $userInfo['level'] ;?></td>
-                                              <td><?php //echo $userInfo['email'] ;?></td>-->
-                                            </tr>
-                                          <?php endwhile ;?>
-                                            </tr>
-                                             </tbody>
-                                             <button type="submit" class="btn btn-success btn-block" name="submit">Register</button>
-
-                                    </table>
-                                </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
+            ?>
+<!-- /Register Course -->
 
             </div>
             <!-- /page content -->
